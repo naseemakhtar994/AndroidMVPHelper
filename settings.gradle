@@ -1,0 +1,1 @@
+include ':app', ':mvp', ':mvp_autosavable', ':mvp_base', ':mvp_presenter', ':mvp_rx_presenter', ':mvp_autosavable_annotation'

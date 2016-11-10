@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'mvp_autosavable'
+
+    publishedGroupId = 'com.ufkoku.mvp'
+    libraryName = libraryName
+    artifact = 'mvp_autosavable'
+
+    libraryDescription = 'Annotation processor for generating autosaveable ViewStates'
+
+    siteUrl = gitUrl
+    gitUrl = gitUrl
+
+    libraryVersion = version_name
+
+    developerId = 'ufkoku'
+    developerName = 'Sizyntsev Mykyta'
+    developerEmail = 'ufkoku@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+apply from: '../installv1.gradle'
+apply from: '../bintrayv1.gradle'

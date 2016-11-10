@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion = Integer.parseInt(compileApiVersion)
+    buildToolsVersion toolsVersion
+
+    defaultConfig {
+        applicationId "com.ufkoku.demo_app"
+        minSdkVersion Integer.parseInt(minApiVersion)
+        targetSdkVersion Integer.parseInt(targetApiVersion)
+        versionCode = version_code
+        versionName = version_name
+        enforceUniquePackageName = false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    maven { url 'https://dl.bintray.com/ufkoku/maven/' }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile "com.android.support:appcompat-v7:25.0.0"
+
+    def mvp_ver = '0.1.1-beta'
+    compile "com.ufkoku.mvp:mvp:$mvp_ver"
+    compile "com.ufkoku.mvp:mvp_rx_presenter:$mvp_ver"
+
+    compile("com.ufkoku.mvp:mvp_autosavable_annotation:$mvp_ver")
+    apt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
+    androidTestApt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
+}

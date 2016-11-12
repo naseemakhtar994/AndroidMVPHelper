@@ -1,13 +1,11 @@
-package com.ufkoku.demo_app.ui.retainable;
+package com.ufkoku.demo_app.ui.activity.savable;
 
 import com.ufkoku.demo_app.entity.AwesomeEntity;
-import com.ufkoku.mvp_base.viewstate.IViewState;
+import com.ufkoku.mvp.viewstate.autosavable.AutoSavable;
+import com.ufkoku.mvp.viewstate.autosavable.AutoSavableViewState;
 
-/**
- * Created by Zwei on 09.11.2016.
- */
-
-public class RetainableViewState implements IViewState<IRetainableActivity> {
+@AutoSavable
+public class SavableViewState extends AutoSavableViewState<ISavableActivity> {
 
     private transient boolean applied = false;
 
@@ -26,7 +24,7 @@ public class RetainableViewState implements IViewState<IRetainableActivity> {
     }
 
     @Override
-    public void apply(IRetainableActivity iSavableActivity) {
+    public void apply(ISavableActivity iSavableActivity) {
         if (entity != null){
             applied = true;
             iSavableActivity.populateAwesomeEntity(entity);

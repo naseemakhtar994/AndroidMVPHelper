@@ -1,4 +1,4 @@
-package com.ufkoku.demo_app.ui.savable;
+package com.ufkoku.demo_app.ui.activity.savable;
 
 import com.ufkoku.demo_app.entity.AwesomeEntity;
 import com.ufkoku.mvp.presenter.rx.BaseAsyncRxPresenter;

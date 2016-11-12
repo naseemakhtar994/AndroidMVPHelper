@@ -1,8 +1,8 @@
-package com.ufkoku.demo_app.ui.savable;
+package com.ufkoku.demo_app.ui.activity.savable;
 
 import com.ufkoku.demo_app.R;
 import com.ufkoku.demo_app.entity.AwesomeEntity;
-import com.ufkoku.demo_app.ui.view.DataView;
+import com.ufkoku.demo_app.ui.activity.view.DataView;
 import com.ufkoku.mvp.savable.BaseSavableActivity;
 
 import org.jetbrains.annotations.NotNull;

@@ -16,6 +16,9 @@ import com.ufkoku.mvp.retainable.BaseRetainableFragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RetainableFragment extends BaseRetainableFragment<IRetainableFragment, RetainableFragmentPresenter, RetainableFragmentViewState> implements IRetainableFragment {
 
@@ -85,19 +88,19 @@ public class RetainableFragment extends BaseRetainableFragment<IRetainableFragme
     //-----------------------------------------------------------------------------------//
 
     @Override
-    public void onAwesomeEntityLoaded(AwesomeEntity entity) {
+    public void onDataLoaded(ArrayList<AwesomeEntity> entity) {
         RetainableFragmentViewState state = getViewState();
         if (state != null){
             state.setEntity(entity);
         }
-        populateAwesomeEntity(entity);
+        populateData(entity);
     }
 
     @Override
-    public void populateAwesomeEntity(AwesomeEntity entity) {
+    public void populateData(List<AwesomeEntity> entity) {
         if (view != null){
             view.setWaitViewVisible(false);
-            view.populateAwesomeEntity(entity);
+            view.populateData(entity);
         }
     }
 

@@ -1,22 +1,26 @@
 package com.ufkoku.demo_app.ui.fragments.savable;
 
+import android.support.annotation.NonNull;
+
 import com.ufkoku.demo_app.entity.AwesomeEntity;
 import com.ufkoku.mvp.viewstate.autosavable.AutoSavable;
 import com.ufkoku.mvp.viewstate.autosavable.AutoSavableViewState;
+
+import java.util.ArrayList;
 
 @AutoSavable
 public class SavableFragmentViewState extends AutoSavableViewState<ISavableFragment> {
 
     private transient boolean applied = false;
 
-    private AwesomeEntity entity;
+    private ArrayList<AwesomeEntity> entities;
 
-    public AwesomeEntity getEntity() {
-        return entity;
+    public ArrayList<AwesomeEntity> getEntities() {
+        return entities;
     }
 
-    public void setEntity(AwesomeEntity entity) {
-        this.entity = entity;
+    public void setEntities(ArrayList<AwesomeEntity> entity) {
+        this.entities = entity;
     }
 
     public boolean isApplied() {
@@ -24,11 +28,11 @@ public class SavableFragmentViewState extends AutoSavableViewState<ISavableFragm
     }
 
     @Override
-    public void apply(ISavableFragment iSavableActivity) {
-        if (entity != null) {
+    public void apply(@NonNull ISavableFragment iSavableFragment) {
+        if (entities != null) {
             applied = true;
-            iSavableActivity.populateAwesomeEntity(entity);
-            iSavableActivity.setWaitViewVisible(false);
+            iSavableFragment.populateData(entities);
+            iSavableFragment.setWaitViewVisible(false);
         }
     }
 

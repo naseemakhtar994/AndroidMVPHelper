@@ -1,12 +1,13 @@
 package com.ufkoku.demo_app.ui.fragments.savable;
 
 import com.ufkoku.demo_app.entity.AwesomeEntity;
-import com.ufkoku.demo_app.ui.view.IDataView;
+import com.ufkoku.demo_app.ui.fragments.view.IFragmentsDataView;
 import com.ufkoku.mvp_base.view.IMvpView;
 
+import java.util.ArrayList;
 
-public interface ISavableFragment extends IMvpView, IDataView {
+public interface ISavableFragment extends IMvpView, IFragmentsDataView {
 
-    void onAwesomeEntityLoaded(AwesomeEntity entity); //called from Presenter
+    void onDataLoaded(ArrayList<AwesomeEntity> entities);
 
 }

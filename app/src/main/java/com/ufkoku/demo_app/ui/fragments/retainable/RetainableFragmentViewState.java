@@ -1,8 +1,12 @@
 package com.ufkoku.demo_app.ui.fragments.retainable;
 
+import android.support.annotation.NonNull;
+
 import com.ufkoku.demo_app.entity.AwesomeEntity;
 import com.ufkoku.demo_app.ui.fragments.savable.ISavableFragment;
 import com.ufkoku.mvp_base.viewstate.IViewState;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zwei on 10.11.2016.
@@ -12,14 +16,14 @@ public class RetainableFragmentViewState implements IViewState<IRetainableFragme
 
     private transient boolean applied = false;
 
-    private AwesomeEntity entity;
+    private ArrayList<AwesomeEntity> entities;
 
-    public AwesomeEntity getEntity() {
-        return entity;
+    public ArrayList<AwesomeEntity> getEntity() {
+        return entities;
     }
 
-    public void setEntity(AwesomeEntity entity) {
-        this.entity = entity;
+    public void setEntity(ArrayList<AwesomeEntity> entity) {
+        this.entities = entity;
     }
 
     public boolean isApplied() {
@@ -27,11 +31,11 @@ public class RetainableFragmentViewState implements IViewState<IRetainableFragme
     }
 
     @Override
-    public void apply(IRetainableFragment iSavableActivity) {
-        if (entity != null) {
+    public void apply(@NonNull IRetainableFragment iRetainableFragment) {
+        if (entities != null) {
             applied = true;
-            iSavableActivity.populateAwesomeEntity(entity);
-            iSavableActivity.setWaitViewVisible(false);
+            iRetainableFragment.populateData(entities);
+            iRetainableFragment.setWaitViewVisible(false);
         }
     }
 

@@ -16,6 +16,9 @@ import com.ufkoku.mvp.savable.BaseSavableFragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SavableFragment extends BaseSavableFragment<ISavableFragment, SavableFragmentPresenter, SavableFragmentViewState> implements ISavableFragment {
 
     private FragmentsDataView view;
@@ -84,19 +87,19 @@ public class SavableFragment extends BaseSavableFragment<ISavableFragment, Savab
     //----------------------------------------------------------------------------------------//
 
     @Override
-    public void onAwesomeEntityLoaded(AwesomeEntity entity) {
+    public void onDataLoaded(ArrayList<AwesomeEntity> entities) {
         SavableFragmentViewState state = getViewState();
         if (state != null){
-            state.setEntity(entity);
+            state.setEntities(entities);
         }
-        populateAwesomeEntity(entity);
+        populateData(entities);
     }
 
     @Override
-    public void populateAwesomeEntity(AwesomeEntity entity) {
+    public void populateData(List<AwesomeEntity> entity) {
         if (view != null){
             view.setWaitViewVisible(false);
-            view.populateAwesomeEntity(entity);
+            view.populateData(entity);
         }
     }
 

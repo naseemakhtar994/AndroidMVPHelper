@@ -1,16 +1,26 @@
 package com.ufkoku.demo_app.ui.fragments.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.ufkoku.demo_app.R;
-import com.ufkoku.demo_app.ui.view.DataView;
+import com.ufkoku.demo_app.entity.AwesomeEntity;
+import com.ufkoku.demo_app.ui.fragments.view.adapter.DataAdapter;
+
+import java.util.List;
 
 
-public class FragmentsDataView extends DataView {
+public class FragmentsDataView extends FrameLayout implements IFragmentsDataView {
 
     private ViewListener listener;
+
+    private RecyclerView recyclerView;
+
+    private View vWaitView;
 
     public FragmentsDataView(Context context) {
         super(context);
@@ -27,6 +37,12 @@ public class FragmentsDataView extends DataView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        vWaitView = findViewById(R.id.waitView);
+
         findViewById(R.id.retainable).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +63,21 @@ public class FragmentsDataView extends DataView {
 
     public void setListener(ViewListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void populateData(final List<AwesomeEntity> entities) {
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setAdapter(new DataAdapter(getContext(), entities));
+            }
+        });
+    }
+
+    @Override
+    public void setWaitViewVisible(boolean visible) {
+        vWaitView.setVisibility(visible ? VISIBLE : GONE);
     }
 
     public interface ViewListener {

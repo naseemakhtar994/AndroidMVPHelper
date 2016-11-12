@@ -1,8 +1,8 @@
-package com.ufkoku.demo_app.ui.retainable;
+package com.ufkoku.demo_app.ui.activity.retainable;
 
 import com.ufkoku.demo_app.R;
 import com.ufkoku.demo_app.entity.AwesomeEntity;
-import com.ufkoku.demo_app.ui.view.DataView;
+import com.ufkoku.demo_app.ui.activity.view.DataView;
 import com.ufkoku.mvp.retainable.BaseRetainableActivity;
 
 import org.jetbrains.annotations.NotNull;

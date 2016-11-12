@@ -1,5 +1,7 @@
 package com.ufkoku.demo_app.ui.fragments.savable;
 
+import android.support.annotation.NonNull;
+
 import com.ufkoku.demo_app.entity.AwesomeEntity;
 import com.ufkoku.mvp.presenter.rx.BaseAsyncRxPresenter;
 
@@ -35,22 +37,28 @@ public class SavableFragmentPresenter extends BaseAsyncRxPresenter<ISavableFragm
 
     public void fetchData() {
         runningTasks.add(TASK_FETCH_DATA);
-        Observable.create(new BaseAsyncRxPresenter.UiWaitinOnSubscribe<AwesomeEntity>(this) {
+        Observable.create(new BaseAsyncRxPresenter.UiWaitinOnSubscribe<ArrayList<AwesomeEntity>>(this) {
             @Override
-            public void call(BaseAsyncRxPresenter.UiWaitingOnSubscriber<AwesomeEntity> uiWaitingOnSubscriber) {
+            public void call(@NonNull BaseAsyncRxPresenter.UiWaitingOnSubscriber<ArrayList<AwesomeEntity>> uiWaitingOnSubscriber) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                uiWaitingOnSubscriber.onNext(new AwesomeEntity(new Random().nextInt()));
+                Random random = new Random();
+                ArrayList<AwesomeEntity> entities = new ArrayList<>(500);
+                for (int i = 0; i < 500; i++){
+                    entities.add(new AwesomeEntity(random.nextInt()));
+                }
+
+                uiWaitingOnSubscriber.onNext(entities);
                 uiWaitingOnSubscriber.onCompleted();
             }
         })
                 .subscribeOn(getScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<AwesomeEntity>() {
+                .subscribe(new Subscriber<ArrayList<AwesomeEntity>>() {
 
                     @Override
                     public void onCompleted() {
@@ -63,10 +71,10 @@ public class SavableFragmentPresenter extends BaseAsyncRxPresenter<ISavableFragm
                     }
 
                     @Override
-                    public void onNext(AwesomeEntity entity) {
+                    public void onNext(ArrayList<AwesomeEntity> entities) {
                         ISavableFragment activity = getView();
                         if (activity != null) {
-                            activity.onAwesomeEntityLoaded(entity);
+                            activity.onDataLoaded(entities);
                         }
                     }
                 });

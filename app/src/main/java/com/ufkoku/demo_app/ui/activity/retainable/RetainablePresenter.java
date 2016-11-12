@@ -1,4 +1,4 @@
-package com.ufkoku.demo_app.ui.retainable;
+package com.ufkoku.demo_app.ui.activity.retainable;
 
 import com.ufkoku.demo_app.entity.AwesomeEntity;
 import com.ufkoku.mvp.presenter.rx.BaseAsyncRxPresenter;

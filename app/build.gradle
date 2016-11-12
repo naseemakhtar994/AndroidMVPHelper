@@ -29,7 +29,9 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile "com.android.support:appcompat-v7:25.0.0"
+    def support_ver = '25.0.0'
+    compile "com.android.support:appcompat-v7:$support_ver"
+    compile "com.android.support:recyclerview-v7:$support_ver"
 
     def mvp_ver = '0.1.1-beta'
     compile "com.ufkoku.mvp:mvp:$mvp_ver"
@@ -38,4 +40,11 @@ dependencies {
     compile("com.ufkoku.mvp:mvp_autosavable_annotation:$mvp_ver")
     apt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
     androidTestApt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
+
+//    compile project(":mvp")
+//    compile project(":mvp_rx_presenter")
+//
+//    compile project(":mvp_autosavable_annotation")
+//    apt project(":mvp_autosavable")
+//    androidTestApt project(":mvp_autosavable")
 }

@@ -7,8 +7,8 @@ import android.view.View;
 
 import com.ufkoku.demo_app.R;
 import com.ufkoku.demo_app.ui.fragments.FragmentsActivity;
-import com.ufkoku.demo_app.ui.retainable.RetainableActivity;
-import com.ufkoku.demo_app.ui.savable.SavableActivity;
+import com.ufkoku.demo_app.ui.activity.retainable.RetainableActivity;
+import com.ufkoku.demo_app.ui.activity.savable.SavableActivity;
 
 
 

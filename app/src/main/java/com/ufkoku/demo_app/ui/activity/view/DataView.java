@@ -1,4 +1,4 @@
-package com.ufkoku.demo_app.ui.view;
+package com.ufkoku.demo_app.ui.activity.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

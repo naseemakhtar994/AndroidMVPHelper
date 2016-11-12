@@ -16,9 +16,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.retainable.RetainableActivity" android:label="Retainable"/>
+        <activity android:name=".ui.activity.retainable.RetainableActivity" android:label="Retainable"/>
 
-        <activity android:name=".ui.savable.SavableActivity" android:label="Savable"/>
+        <activity android:name=".ui.activity.savable.SavableActivity" android:label="Savable"/>
 
         <activity android:name=".ui.fragments.FragmentsActivity" android:label="Fragments"/>
 

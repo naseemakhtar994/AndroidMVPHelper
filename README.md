@@ -1,5 +1,7 @@
 # AndroidMVPHelper
 
+![alt tag](https://img.shields.io/badge/version-0.1.1--beta-brightgreen.svg)
+
 Library manages lifecycle of Activities and Fragments, their Presenters and ViewStates.
 
 For library usage add:

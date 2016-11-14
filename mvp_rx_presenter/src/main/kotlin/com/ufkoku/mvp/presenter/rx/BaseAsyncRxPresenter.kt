@@ -39,7 +39,7 @@ abstract class BaseAsyncRxPresenter<T : IMvpView> : BaseAsyncPresenter<T>() {
         }
     }
 
-    abstract class UiWaitinOnSubscribe<T>(val presenter: BaseAsyncPresenter<*>) : Observable.OnSubscribe<T> {
+    abstract class UiWaitingOnSubscribe<T>(val presenter: BaseAsyncPresenter<*>) : Observable.OnSubscribe<T> {
 
         final override fun call(t: Subscriber<in T>?) {
             call(UiWaitingOnSubscriber(t!!, presenter))

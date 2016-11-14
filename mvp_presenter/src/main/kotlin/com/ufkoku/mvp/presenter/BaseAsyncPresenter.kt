@@ -26,7 +26,7 @@ abstract class BaseAsyncPresenter<T : IMvpView> : BasePresenter<T>(), IAsyncPres
 
     protected var executor: ExecutorService? = null
 
-    protected val runningTasks: MutableList<String> = Collections.synchronizedList(ArrayList())
+    private val runningTasks: MutableList<Int> = Collections.synchronizedList(LinkedList())
 
     /**
      * This variable is true if view detached, but screen is continuing it work,
@@ -76,6 +76,8 @@ abstract class BaseAsyncPresenter<T : IMvpView> : BasePresenter<T>(), IAsyncPres
 
             }
         }
+
+        runningTasks.clear()
     }
 
     /**
@@ -93,6 +95,22 @@ abstract class BaseAsyncPresenter<T : IMvpView> : BasePresenter<T>(), IAsyncPres
                 }
             }
         }
+    }
+
+    fun notifyTaskAdded(task: Int) {
+        runningTasks.add(task)
+    }
+
+    fun notifyTaskFinished(task: Int) {
+        runningTasks.remove(task)
+    }
+
+    fun isTaskRunning(task: Int): Boolean {
+        return runningTasks.contains(task)
+    }
+
+    fun hasRunningTasks(): Boolean {
+        return runningTasks.size > 0
     }
 
 }

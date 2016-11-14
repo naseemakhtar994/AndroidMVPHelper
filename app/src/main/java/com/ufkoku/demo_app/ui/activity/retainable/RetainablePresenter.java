@@ -22,8 +22,6 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class RetainablePresenter extends BaseAsyncRxPresenter<IRetainableActivity> {
 
-    private List<Integer> runningTasks = Collections.synchronizedList(new ArrayList<Integer>());
-
     public static Integer TASK_FETCH_DATA = 1;
 
     @NotNull
@@ -32,17 +30,13 @@ public class RetainablePresenter extends BaseAsyncRxPresenter<IRetainableActivit
         return new ScheduledThreadPoolExecutor(1);
     }
 
-    public boolean isTaskRunning(Integer task){
-        return runningTasks.contains(task);
-    }
-
     public void fetchData() {
-        runningTasks.add(TASK_FETCH_DATA);
-        Observable.create(new BaseAsyncRxPresenter.UiWaitinOnSubscribe<AwesomeEntity>(this) {
+        notifyTaskAdded(TASK_FETCH_DATA);
+        Observable.create(new BaseAsyncRxPresenter.UiWaitingOnSubscribe<AwesomeEntity>(this) {
             @Override
             public void call(UiWaitingOnSubscriber<AwesomeEntity> uiWaitingOnSubscriber) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -56,18 +50,18 @@ public class RetainablePresenter extends BaseAsyncRxPresenter<IRetainableActivit
                 .subscribe(new Subscriber<AwesomeEntity>() {
                     @Override
                     public void onCompleted() {
-                        runningTasks.remove(TASK_FETCH_DATA);
+                        notifyTaskFinished(TASK_FETCH_DATA);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        runningTasks.remove(TASK_FETCH_DATA);
+                        notifyTaskFinished(TASK_FETCH_DATA);
                     }
 
                     @Override
                     public void onNext(AwesomeEntity entity) {
                         IRetainableActivity activity = getView();
-                        if (activity != null){
+                        if (activity != null) {
                             activity.onAwesomeEntityLoaded(entity);
                         }
                     }

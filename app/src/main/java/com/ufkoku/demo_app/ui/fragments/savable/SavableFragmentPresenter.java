@@ -21,8 +21,6 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class SavableFragmentPresenter extends BaseAsyncRxPresenter<ISavableFragment> {
 
-    private List<Integer> runningTasks = Collections.synchronizedList(new ArrayList<Integer>());
-
     public static Integer TASK_FETCH_DATA = 1;
 
     @NotNull
@@ -31,25 +29,26 @@ public class SavableFragmentPresenter extends BaseAsyncRxPresenter<ISavableFragm
         return new ScheduledThreadPoolExecutor(1);
     }
 
-    public boolean isTaskRunning(Integer task) {
-        return runningTasks.contains(task);
-    }
-
     public void fetchData() {
-        runningTasks.add(TASK_FETCH_DATA);
-        Observable.create(new BaseAsyncRxPresenter.UiWaitinOnSubscribe<ArrayList<AwesomeEntity>>(this) {
+        notifyTaskAdded(TASK_FETCH_DATA);
+        Observable.create(new BaseAsyncRxPresenter.UiWaitingOnSubscribe<ArrayList<AwesomeEntity>>(this) {
             @Override
             public void call(@NonNull BaseAsyncRxPresenter.UiWaitingOnSubscriber<ArrayList<AwesomeEntity>> uiWaitingOnSubscriber) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                Random random = new Random();
-                ArrayList<AwesomeEntity> entities = new ArrayList<>(500);
-                for (int i = 0; i < 500; i++){
-                    entities.add(new AwesomeEntity(random.nextInt()));
+                ArrayList<AwesomeEntity> entities = new ArrayList<>(100);
+                if (new Random().nextBoolean()) {
+                    for (int i = 0; i < 100; i++) {
+                        entities.add(new AwesomeEntity(i));
+                    }
+                } else {
+                    for (int i = 99; i >= 0; i--) {
+                        entities.add(new AwesomeEntity(i));
+                    }
                 }
 
                 uiWaitingOnSubscriber.onNext(entities);
@@ -62,12 +61,12 @@ public class SavableFragmentPresenter extends BaseAsyncRxPresenter<ISavableFragm
 
                     @Override
                     public void onCompleted() {
-                        runningTasks.remove(TASK_FETCH_DATA);
+                        notifyTaskFinished(TASK_FETCH_DATA);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        runningTasks.remove(TASK_FETCH_DATA);
+                        notifyTaskFinished(TASK_FETCH_DATA);
                     }
 
                     @Override

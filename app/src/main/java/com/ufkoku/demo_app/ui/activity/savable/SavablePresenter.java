@@ -22,7 +22,7 @@ public class SavablePresenter extends BaseAsyncRxPresenter<ISavableActivity> {
     }
 
     public void fetchData() {
-        Observable.create(new BaseAsyncRxPresenter.UiWaitinOnSubscribe<AwesomeEntity>(this) {
+        Observable.create(new BaseAsyncRxPresenter.UiWaitingOnSubscribe<AwesomeEntity>(this) {
             @Override
             public void call(UiWaitingOnSubscriber<AwesomeEntity> uiWaitingOnSubscriber) {
                 try {
@@ -51,7 +51,7 @@ public class SavablePresenter extends BaseAsyncRxPresenter<ISavableActivity> {
                     @Override
                     public void onNext(AwesomeEntity entity) {
                         ISavableActivity activity = getView();
-                        if (activity != null){
+                        if (activity != null) {
                             activity.onAwesomeEntityLoaded(entity);
                         }
                     }

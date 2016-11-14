@@ -33,7 +33,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$support_ver"
     compile "com.android.support:recyclerview-v7:$support_ver"
 
-    def mvp_ver = '0.1.1-beta'
+    def mvp_ver = '0.2.2-beta'
     compile "com.ufkoku.mvp:mvp:$mvp_ver"
     compile "com.ufkoku.mvp:mvp_rx_presenter:$mvp_ver"
 

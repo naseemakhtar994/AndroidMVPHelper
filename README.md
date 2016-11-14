@@ -85,7 +85,7 @@ dependencies{
 
 This modules provides autosaving to Bundle and restoring state back.
 
-This two modules performing generate com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver class.
+This two modules performing generate com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver classes.
 
 When annotation processor generates com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver it looks for:
 * Public access to field;
@@ -104,7 +104,7 @@ To use it you should:
   * com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver.save(this, bundle)
   * com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver.restore(this, bundle)
 
-Example of usage [SavableViewState](https://github.com/Ufkoku/AndroidMVPHelper/blob/master/app/src/main/java/com/ufkoku/demo_app/ui/savable/SavableViewState.java)
+Example of usage [SavableActivityViewState](https://github.com/Ufkoku/AndroidMVPHelper/blob/master/app/src/main/java/com/ufkoku/demo_app/ui/activity/savable/SavableActivityViewState.java)
 
 * If you are using kotlin:
 ```gradle

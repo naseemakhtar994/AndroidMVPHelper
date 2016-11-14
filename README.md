@@ -4,6 +4,8 @@
 
 Library manages lifecycle of Activities and Fragments, their Presenters and ViewStates.
 
+Look at [Wiki](https://github.com/Ufkoku/AndroidMVPHelper/wiki) for more details.
+
 For library usage add:
 
 ```gradle

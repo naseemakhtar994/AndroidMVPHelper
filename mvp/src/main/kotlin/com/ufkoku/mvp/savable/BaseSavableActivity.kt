@@ -84,7 +84,7 @@ abstract class BaseSavableActivity<V : IMvpView, P : IPresenter<V>, VS : ISavabl
         super.onDestroy()
 
         presenter!!.onDetachView()
-        if (isFinishing && presenter is IAsyncPresenter<*>) {
+        if (presenter is IAsyncPresenter<*>) {
             (presenter!! as IAsyncPresenter<*>).cancel()
         }
     }

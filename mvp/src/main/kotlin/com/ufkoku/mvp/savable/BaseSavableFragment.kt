@@ -81,15 +81,15 @@ abstract class BaseSavableFragment<V : IMvpView, P : IPresenter<V>, VS : ISavabl
     override fun onDestroyView() {
         presenter?.onDetachView()
 
+        if (presenter is IAsyncPresenter<*>) {
+            (presenter as IAsyncPresenter<*>).cancel()
+        }
+
         super.onDestroyView()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (presenter is IAsyncPresenter<*>) {
-            (presenter as IAsyncPresenter<*>).cancel()
-        }
 
         presenter = null
         viewState = null

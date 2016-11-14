@@ -75,10 +75,6 @@ public class AutosavableProcessor extends AbstractProcessor {
                 }
             }
 
-            createSaveHandler(saverNames);
-
-            createAutoSavableViewState();
-
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -291,6 +287,7 @@ public class AutosavableProcessor extends AbstractProcessor {
         MethodSpec restoreSpec = restoreSpecBuilder.build();
 
         TypeSpec typeSpec = TypeSpec.classBuilder(name)
+                .addModifiers(Modifier.PUBLIC)
                 .addMethod(saveSpec)
                 .addMethod(restoreSpec)
                 .build();
@@ -302,123 +299,6 @@ public class AutosavableProcessor extends AbstractProcessor {
                 ((PackageElement) element.getEnclosingElement()).getQualifiedName().toString(),
                 element.getSimpleName().toString(),
                 name);
-    }
-
-    private void createSaveHandler(List<SaverPair> savers) throws IOException {
-        MethodSpec.Builder saveSpecBuilder = MethodSpec.methodBuilder("save")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addParameter(Object.class, "state")
-                .addParameter(ClassName.bestGuess(BUNDLE_FULL_NAME), "outState")
-                .returns(void.class);
-
-        for (int i = 0; i < savers.size(); i++) {
-            SaverPair saver = savers.get(i);
-            System.out.println("Processing saver: " + saver.getOriginalPackage() + "." + saver.getOriginalName() + "/" + saver.getSaverName());
-            saveSpecBuilder.beginControlFlow("if (state.getClass().getSimpleName().equals($S))", saver.getOriginalName());
-            saveSpecBuilder.addStatement("$L.save(($T) state, outState)",
-                    saver.getSaverName(),
-                    ClassName.bestGuess(
-                            createFullName(saver.getOriginalPackage(), saver.getOriginalName())));
-            if (i != savers.size() - 1) {
-                saveSpecBuilder.addCode("} else ");
-            } else {
-                saveSpecBuilder.endControlFlow();
-            }
-        }
-
-        MethodSpec saveSpec = saveSpecBuilder.build();
-
-        MethodSpec.Builder restoreSpecBuilder = MethodSpec.methodBuilder("restore")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addParameter(Object.class, "state")
-                .addParameter(ClassName.bestGuess(BUNDLE_FULL_NAME), "inState")
-                .returns(void.class);
-
-        for (int i = 0; i < savers.size(); i++) {
-            SaverPair saver = savers.get(i);
-            System.out.println("Processing saver: " + saver.getOriginalPackage() + "." + saver.getOriginalName() + "/" + saver.getSaverName());
-            restoreSpecBuilder.beginControlFlow("if (state.getClass().getSimpleName().equals($S))", saver.getOriginalName());
-            restoreSpecBuilder.addStatement("$L.restore(($T) state, inState)",
-                    saver.getSaverName(),
-                    ClassName.bestGuess(
-                            createFullName(saver.getOriginalPackage(), saver.getOriginalName())));
-            if (i != savers.size() - 1) {
-                restoreSpecBuilder.addCode("} else ");
-            } else {
-                restoreSpecBuilder.endControlFlow();
-            }
-        }
-
-        MethodSpec restoreSpec = restoreSpecBuilder.build();
-
-        TypeSpec.Builder typeSpecBuilder = TypeSpec.classBuilder(SAVE_HANDLER_NAME)
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(saveSpec)
-                .addMethod(restoreSpec);
-
-        TypeSpec typeSpec = typeSpecBuilder.build();
-
-        JavaFile javaFile = JavaFile.builder(PACKAGE, typeSpec).build();
-        javaFile.writeTo(System.out);
-        javaFile.writeTo(processingEnv.getFiler());
-    }
-
-    private void createAutoSavableViewState() throws IOException {
-        JavaFileObject jfo = processingEnv.getFiler().createSourceFile(createFullName(PACKAGE, AUTO_SAVABLE_NAME));
-        BufferedWriter writer = new BufferedWriter(jfo.openWriter());
-
-        writer.append("package " + PACKAGE + ";");
-        writer.newLine();
-        writer.newLine();
-
-        writer.append(createImport(BUNDLE_FULL_NAME));
-        writer.newLine();
-        writer.newLine();
-
-        writer.append(createImport(I_MVP_VIEW_FULL_NAME));
-        writer.newLine();
-        writer.append(createImport(SAVABLE_INTERFACE_FULL_NAME));
-        writer.newLine();
-        writer.newLine();
-
-        writer.append(createImport("java.lang.Override"));
-        writer.newLine();
-        writer.newLine();
-
-        writer.append("public abstract class AutoSavableViewState<T extends IMvpView> implements ISavableViewState<T> {");
-        writer.newLine();
-
-        writer.append("     @Override");
-        writer.newLine();
-        writer.append("     public void save(Bundle out){");
-        writer.newLine();
-        writer.append("         SaveHandler.save(this, out);");
-        writer.newLine();
-        writer.append("     }");
-        writer.newLine();
-        writer.newLine();
-
-        writer.append("     @Override");
-        writer.newLine();
-        writer.append("     public void restore(Bundle inState) {");
-        writer.newLine();
-        writer.append("         SaveHandler.restore(this, inState);");
-        writer.newLine();
-        writer.append("     }");
-        writer.newLine();
-
-        writer.append("}");
-
-        writer.flush();
-        writer.close();
-    }
-
-    private String createFullName(String packageName, String name) {
-        return packageName + "." + name;
-    }
-
-    private String createImport(String path) {
-        return "import " + path + ";";
     }
 
     private String createCatch(Class<? extends Throwable> ex) {

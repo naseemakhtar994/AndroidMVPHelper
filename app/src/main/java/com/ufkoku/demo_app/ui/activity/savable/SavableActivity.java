@@ -7,7 +7,7 @@ import com.ufkoku.mvp.savable.BaseSavableActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SavableActivity extends BaseSavableActivity<ISavableActivity, SavablePresenter, SavableViewState> implements ISavableActivity {
+public class SavableActivity extends BaseSavableActivity<ISavableActivity, SavableActivityPresenter, SavableActivityViewState> implements ISavableActivity {
 
     private DataView view;
 
@@ -27,18 +27,18 @@ public class SavableActivity extends BaseSavableActivity<ISavableActivity, Savab
 
     @NotNull
     @Override
-    public SavableViewState createNewViewState() {
-        return new SavableViewState();
+    public SavableActivityViewState createNewViewState() {
+        return new SavableActivityViewState();
     }
 
     @NotNull
     @Override
-    public SavablePresenter createPresenter() {
-        return new SavablePresenter();
+    public SavableActivityPresenter createPresenter() {
+        return new SavableActivityPresenter();
     }
 
     @Override
-    public void onInitialized(SavablePresenter savablePresenter, SavableViewState savableViewState) {
+    public void onInitialized(SavableActivityPresenter savablePresenter, SavableActivityViewState savableViewState) {
         if (!savableViewState.isApplied()){
             savablePresenter.fetchData();
         }
@@ -56,7 +56,7 @@ public class SavableActivity extends BaseSavableActivity<ISavableActivity, Savab
 
     @Override
     public void onAwesomeEntityLoaded(AwesomeEntity entity) {
-        SavableViewState state = getViewState();
+        SavableActivityViewState state = getViewState();
         if (state != null){
             state.setEntity(entity);
         }

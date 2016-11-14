@@ -1,6 +1,6 @@
 # AndroidMVPHelper
 
-![alt tag](https://img.shields.io/badge/version-0.2.3--beta-brightgreen.svg)
+![alt tag](https://img.shields.io/badge/version-0.3.3--beta-brightgreen.svg)
 
 Library manages lifecycle of Activities and Fragments, their Presenters and ViewStates.
 
@@ -85,10 +85,7 @@ dependencies{
 
 This modules provides autosaving to Bundle and restoring state back.
 
-This two modules performing generating of next classes:
-* com.ufkoku.mvp.viewstate.autosavable.AutoSavableViewState
-* com.ufkoku.mvp.viewstate.autosavable.SaveHandler
-* com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver
+This two modules performing generate com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver class.
 
 When annotation processor generates com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver it looks for:
 * Public access to field;
@@ -102,7 +99,10 @@ Annotation processor ignores:
 
 To use it you should:
 * Annotate your class with @AutoSavable
-* Extend an AutoSavableViewState, that implements save() and restore() methods from [ISavableViewState](https://github.com/Ufkoku/AndroidMVPHelper/blob/master/mvp_base/src/main/kotlin/com/ufkoku/mvp_base/viewstate/ISavableViewState.kt)
+* Build project
+* Implement save() and restore() methods from [ISavableViewState](https://github.com/Ufkoku/AndroidMVPHelper/blob/master/mvp_base/src/main/kotlin/com/ufkoku/mvp_base/viewstate/ISavableViewState.kt) via calling:
+  * com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver.save(this, bundle)
+  * com.ufkoku.mvp.viewstate.autosavable.{class_name}Saver.restore(this, bundle)
 
 Example of usage [SavableViewState](https://github.com/Ufkoku/AndroidMVPHelper/blob/master/app/src/main/java/com/ufkoku/demo_app/ui/savable/SavableViewState.java)
 

@@ -13,7 +13,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class SavablePresenter extends BaseAsyncRxPresenter<ISavableActivity> {
+public class SavableActivityPresenter extends BaseAsyncRxPresenter<ISavableActivity> {
 
     @NotNull
     @Override

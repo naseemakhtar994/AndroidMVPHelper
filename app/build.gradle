@@ -33,7 +33,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$support_ver"
     compile "com.android.support:recyclerview-v7:$support_ver"
 
-    def mvp_ver = '0.2.3-beta'
+    def mvp_ver = '0.3.3-beta'
     compile "com.ufkoku.mvp:mvp:$mvp_ver"
     compile "com.ufkoku.mvp:mvp_rx_presenter:$mvp_ver"
 
@@ -43,7 +43,7 @@ dependencies {
 
 //    compile project(":mvp")
 //    compile project(":mvp_rx_presenter")
-//
+
 //    compile project(":mvp_autosavable_annotation")
 //    apt project(":mvp_autosavable")
 //    androidTestApt project(":mvp_autosavable")

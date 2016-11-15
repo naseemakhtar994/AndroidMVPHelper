@@ -108,8 +108,7 @@ Example of usage [SavableActivityViewState](https://github.com/Ufkoku/AndroidMVP
 
 * If you are using kotlin:
 ```gradle
-dependencies{
-  compile "com.ufkoku.mvp:mvp_base:$mvp_ver" //if any other module not used
+dependencies{  
   compile("com.ufkoku.mvp:mvp_autosavable_annotation:$mvp_ver")
   kapt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
 }
@@ -131,8 +130,7 @@ buildscript {
 
 apply plugin: 'com.neenbedankt.android-apt'
 
-dependencies {
-    compile "com.ufkoku.mvp:mvp_base:$mvp_ver" //if any other module not used
+dependencies {    
     compile("com.ufkoku.mvp:mvp_autosavable_annotation:$mvp_ver")
     apt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
     androidTestApt("com.ufkoku.mvp:mvp_autosavable:$mvp_ver")
